@@ -1,0 +1,123 @@
+\documentclass[10pt, twocolumn, twoside, letterpaper]{IEEEtran}
+\IEEEoverridecommandlockouts
+
+\usepackage[activate={true, nocompatibility}, final, tracking=true, kerning=true, spacing=true, factor=1100, stretch=10, shrink=10]{microtype}
+\linespread{0.9}
+
+\makeatletter
+\def\ps@IEEEtitlepagestyle{
+  \def\@evenfoot{}
+}
+
+% \def\ps@IEEEtitlepagestyle{
+%   \def\@oddfoot{\mycopyrightnotice}
+%   \def\@evenfoot{}
+% }
+% \def\mycopyrightnotice{
+%   {\footnotesize
+%   \begin{minipage}{\textwidth}
+%   \centering
+%   978-1-7281-7693-2/20/\$31.00 \copyright2020 IEEE
+%   \end{minipage}
+%   }
+% }
+
+\ifCLASSINFOpdf
+   \usepackage[pdftex]{graphicx}
+\else
+   \usepackage[dvips]{graphicx}
+\fi
+
+\ifCLASSOPTIONcompsoc
+  \usepackage[caption=false, font=normalsize, labelfont=sf, textfont=sf]{subfig}
+\else
+  \usepackage[caption=false, font=footnotesize]{subfig}
+\fi
+
+\usepackage{amsmath}
+\usepackage{bm}
+\usepackage{amssymb}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{stfloats}
+\usepackage{url}
+\usepackage{siunitx}
+\usepackage{fancyref}
+
+\usepackage{geometry}
+\geometry{letterpaper, top=0.7in, bottom=0.7in, left=0.65in, right=0.65in}
+
+\input{glossary}
+
+\usepackage[style=ieee, doi=false, isbn=false, url=false, maxbibnames=1, minbibnames=1, maxcitenames=1, mincitenames=1, backend=biber, defernumbers=false]{biblatex}
+\addbibresource{./bibtex/bib/Biblio.bib}
+
+\AtEveryBibitem{\clearfield{month}}
+\AtEveryBibitem{\clearfield{day}}
+\AtEveryBibitem{\clearfield{volume}}
+\AtEveryBibitem{\clearfield{issue}}
+\AtEveryBibitem{\clearfield{pages}}
+\AtEveryBibitem{\clearfield{number}}
+\AtEveryBibitem{\clearfield{title}}
+\AtEveryBibitem{\clearfield{isbn}}
+\AtEveryBibitem{\clearfield{keywords}}
+\AtEveryBibitem{\clearfield{issn}}
+\AtEveryBibitem{\clearfield{journal}}
+
+\begin{document}
+
+\title{Comparison of Motion Modelling Motion Correction Methods For PET/CT Using a Single Breath Hold Attenuation Map}
+
+\pagestyle{plain}
+\pagenumbering{gobble}
+
+\author{
+    \IEEEauthorblockN{
+        Alexander~C.~Whitehead~\IEEEauthorrefmark{1}~\IEEEauthorrefmark{2},
+        Kuan-Hao~Su~\IEEEauthorrefmark{3},
+        Scott~W.~Wollenweber~\IEEEauthorrefmark{3},
+        Charles~W.~Stearns~\IEEEauthorrefmark{3},
+        Brian~F.~Hutton~\IEEEauthorrefmark{1},
+        Jamie~R.~McClelland~\IEEEauthorrefmark{2} and
+        Kris~Thielemans~\IEEEauthorrefmark{1}~\IEEEauthorrefmark{2}
+    }
+    
+    \IEEEauthorblockA{
+        \IEEEauthorrefmark{1}
+        \textit{Institute of Nuclear Medicine, University College London, UK}
+    }
+    
+    \IEEEauthorblockA{
+        \IEEEauthorrefmark{2}
+        \textit{Centre for Medical Image Computing, University College London, UK}
+    }
+    
+    \IEEEauthorblockA{
+        \IEEEauthorrefmark{3}
+        \textit{Molecular Imaging and Computed Tomography Engineering, GE Healthcare, USA}
+    }
+        
+    \vspace{-1.0cm}
+
+    \thanks{This research is supported by GE Healthcare, the NIHR UCLH Biomedical Research Centre and the UCL EPSRC Centre for Doctoral Training in Intelligent, Integrated Imaging in Healthcare (i4health) grant (EP/L016478/1). The software used was partly produced by the Computational Collaborative Project on Synergistic Biomedical Imaging, CCP SyneRBI, UK EPSRC grant (EP/T026693/1).}%
+    \thanks{Jamie~R.~McClelland is supported by a Cancer Research UK Centres Network Accelerator Award grant (A21993) to the ART-NET consortium and a CRUK Multi-disciplinary grant (CRC 521).}%
+    \thanks{(contact: \texttt{alexander.whitehead.18@ucl.ac.uk}).}%
+}
+
+\maketitle
+\IEEEpeerreviewmaketitle
+
+\begin{abstract}
+    It is increasingly becoming apparent that the introduction of motion models into respiratory motion correction methods is a technique that can lead to a further reduction in blurring and artefacts. However, the pool of research where motion modelling methods are applied to positron emission tomography with a computed tomography attenuation map is relatively shallow. Previous work has presented methods through which non-attenuation corrected time-of-flight data can be used to fit motion models, not only to motion correct the volumes themselves, but also to warp a single attenuation map to the positions of the initial gated data. This work seeks to extend previous work to offer a comparison of respiratory motion correction methods, not only with and without motion models but also to compare pair-wise and group-wise registration techniques on simulation data with a low count rate, including randoms and scatter, where the attenuation map is from a pseudo breath hold acquisition. To test this $4$-Dimensional Extended Cardiac Torso data is simulated and reconstructed without attenuation correction, then motion corrected using one of pair-wise, pair-wise with motion model, group-wise and group-wise with motion model registration. Next these motion corrected volumes are registered to the breath hold attenuation map and the resultant deformation vector fields are composed for each method. The attenuation map can thus be deformed to the position of the gates using the inverse of these deformations. With the deformed attenuation maps an attenuation corrected reconstruction can be performed and motion correction applied, again, using the relevant method. Evaluation is carried out between the results, as well as against a non-motion corrected example, using a visual analysis, a comparison of profiles through a lesion inserted into the data as well as standard uptake values. Results indicate that the incorporation of a motion model vastly improves contrast and quantification of these noisy volumes, as well as that group-wise provides similar effects when compared to pair-wise registration, but to a lesser degree.
+\end{abstract}
+
+\vspace{-0.4cm}
+
+\input{body}
+
+\vspace{-0.4cm}
+
+\AtNextBibliography{\scriptsize}
+\printbibliography
+
+\end{document}
