@@ -66,7 +66,7 @@
 
 \begin{document}
 
-\title{Comparison of Motion Modelling Motion Correction Methods For PET/CT Using a Single Breath Hold Attenuation Map}
+\title{Comparison of Motion Correction Methods Incorporating Motion Modelling For PET/CT Using a Single Breath Hold Attenuation Map}
 
 \pagestyle{plain}
 \pagenumbering{gobble}
@@ -74,8 +74,9 @@
 \author{
     \IEEEauthorblockN{
         Alexander~C.~Whitehead~\IEEEauthorrefmark{1}~\IEEEauthorrefmark{2},
+        Ander~Biguri~\IEEEauthorrefmark{1},
         Kuan-Hao~Su~\IEEEauthorrefmark{3},
-        Scott~W.~Wollenweber~\IEEEauthorrefmark{3},
+        Scott~D.~Wollenweber~\IEEEauthorrefmark{3},
         Charles~W.~Stearns~\IEEEauthorrefmark{3},
         Brian~F.~Hutton~\IEEEauthorrefmark{1},
         Jamie~R.~McClelland~\IEEEauthorrefmark{2} and
@@ -108,7 +109,7 @@
 \IEEEpeerreviewmaketitle
 
 \begin{abstract}
-    It is increasingly becoming apparent that the introduction of motion models into respiratory motion correction methods is a technique that can lead to a further reduction in blurring and artefacts. However, the pool of research where motion modelling methods are applied to positron emission tomography with a computed tomography attenuation map is relatively shallow. Previous work has presented methods through which non-attenuation corrected time-of-flight data can be used to fit motion models, not only to motion correct the volumes themselves, but also to warp a single attenuation map to the positions of the initial gated data. This work seeks to extend previous work to offer a comparison of respiratory motion correction methods, not only with and without motion models but also to compare pair-wise and group-wise registration techniques on simulation data with a low count rate, including randoms and scatter, where the attenuation map is from a pseudo breath hold acquisition. To test this $4$-Dimensional Extended Cardiac Torso data is simulated and reconstructed without attenuation correction, then motion corrected using one of pair-wise, pair-wise with motion model, group-wise and group-wise with motion model registration. Next these motion corrected volumes are registered to the breath hold attenuation map and the resultant deformation vector fields are composed for each method. The attenuation map can thus be deformed to the position of the gates using the inverse of these deformations. With the deformed attenuation maps an attenuation corrected reconstruction can be performed and motion correction applied, again, using the relevant method. Evaluation is carried out between the results, as well as against a non-motion corrected example, using a visual analysis, a comparison of profiles through a lesion inserted into the data as well as standard uptake values. Results indicate that the incorporation of a motion model vastly improves contrast and quantification of these noisy volumes, as well as that group-wise provides similar effects when compared to pair-wise registration, but to a lesser degree.
+    Introducing motion models into respiratory motion correction methods is a promising technique that can lead to a reduction in blurring and artefacts. However, the pool of research where motion modelling methods are applied to PET/CT is relatively shallow. Previous work has presented methods through which NAC TOF data can be used to fit motion models, not only to motion correct the volumes themselves, but also to warp a single attenuation map to the positions of the initial gated data. This work seeks to extend previous work to offer a comparison of respiratory motion correction methods, not only with and without motion models but also to compare pair-wise and group-wise registration techniques on simulation data with low counts, where the attenuation map is from a pseudo breath hold acquisition. To test the methods XCAT images are constructed, simulated and reconstructed without attenuation correction, then motion corrected using one of pair-wise, pair-wise with motion model, group-wise and group-wise with motion model registration. Next these motion corrected volumes are registered to the breath hold attenuation map. The PET data are then reconstructed using deformed attenuation maps and motion corrected. Evaluation compares the results of these methods, as well as against a non-motion corrected example, using a visual analysis, a comparison of profiles through a lesion inserted into the data as well as standard uptake values in lesions. Results indicate that the incorporation of a motion model and use of group-wise registration improves contrast and quantification.
 \end{abstract}
 
 \vspace{-0.4cm}
