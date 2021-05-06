@@ -66,12 +66,18 @@
 
 \begin{document}
 
-\title{Comparison of Motion Correction Methods Incorporating Motion Modelling For PET/CT Using a Single Breath Hold Attenuation Map}
+\title{
+    \vspace{-0.5cm}
+
+    Comparison of Motion Correction Methods Incorporating Motion Modelling for PET/CT Using a Single Breath Hold Attenuation Map
+}
 
 \pagestyle{plain}
 \pagenumbering{gobble}
 
 \author{
+    \vspace{-0.3cm}
+    
     \IEEEauthorblockN{
         Alexander~C.~Whitehead~\IEEEauthorrefmark{1}~\IEEEauthorrefmark{2},
         Ander~Biguri~\IEEEauthorrefmark{1},
@@ -82,41 +88,47 @@
         Jamie~R.~McClelland~\IEEEauthorrefmark{2} and
         Kris~Thielemans~\IEEEauthorrefmark{1}~\IEEEauthorrefmark{2}
     }
-    
-    \IEEEauthorblockA{
-        \IEEEauthorrefmark{1}
-        \textit{Institute of Nuclear Medicine, University College London, UK}
-    }
-    
-    \IEEEauthorblockA{
-        \IEEEauthorrefmark{2}
-        \textit{Centre for Medical Image Computing, University College London, UK}
-    }
-    
-    \IEEEauthorblockA{
-        \IEEEauthorrefmark{3}
-        \textit{Molecular Imaging and Computed Tomography Engineering, GE Healthcare, USA}
-    }
         
     \vspace{-1.0cm}
+    
+    \thanks{
+            \vspace{-0.5cm}
+            
+            \IEEEauthorblockA{
+                \IEEEauthorrefmark{1}
+                \textit{Institute of Nuclear Medicine, University College London, UK}
+            }
+    }
+    \thanks{\IEEEauthorblockA{
+                \IEEEauthorrefmark{2}
+                \textit{Centre for Medical Image Computing, University College London, UK}
+            }
+    }
+    \thanks{\IEEEauthorblockA{
+                \IEEEauthorrefmark{3}
+                \textit{Molecular Imaging and Computed Tomography Engineering, GE Healthcare, USA}
+            }
+    }
 
-    \thanks{This research is supported by GE Healthcare, the NIHR UCLH Biomedical Research Centre and the UCL EPSRC Centre for Doctoral Training in Intelligent, Integrated Imaging in Healthcare (i4health) grant (EP/L016478/1). The software used was partly produced by the Computational Collaborative Project on Synergistic Biomedical Imaging, CCP SyneRBI, UK EPSRC grant (EP/T026693/1).}%
-    \thanks{Jamie~R.~McClelland is supported by a Cancer Research UK Centres Network Accelerator Award grant (A21993) to the ART-NET consortium and a CRUK Multi-disciplinary grant (CRC 521).}%
-    \thanks{(contact: \texttt{alexander.whitehead.18@ucl.ac.uk}).}%
+    \thanks{This research is supported by GE Healthcare%, the NIHR UCLH Biomedical Research Centre and the UCL EPSRC Centre for Doctoral Training in Intelligent, Integrated Imaging in Healthcare (i4health) grant (EP/L016478/1).
+    }
+    %\thanks{The software used was partly produced by the Computational Collaborative Project on Synergistic Biomedical Imaging, CCP SyneRBI, UK EPSRC grant (EP/T026693/1).}
+    %\thanks{Jamie~R.~McClelland is supported by a Cancer Research UK Centres Network Accelerator Award grant (A21993) to the ART-NET consortium and a CRUK Multi-disciplinary grant (CRC 521).}
+    \thanks{(contact: \texttt{alexander.whitehead.18@ucl.ac.uk}).}
 }
 
 \maketitle
 \IEEEpeerreviewmaketitle
 
 \begin{abstract}
-    Introducing motion models into respiratory motion correction methods is a promising technique that can lead to a reduction in blurring and artefacts. However, the pool of research where motion modelling methods are applied to PET/CT is relatively shallow. Previous work has presented methods through which NAC TOF data can be used to fit motion models, not only to motion correct the volumes themselves, but also to warp a single attenuation map to the positions of the initial gated data. This work seeks to extend previous work to offer a comparison of respiratory motion correction methods, not only with and without motion models but also to compare pair-wise and group-wise registration techniques on simulation data with low counts, where the attenuation map is from a pseudo breath hold acquisition. To test the methods XCAT images are constructed, simulated and reconstructed without attenuation correction, then motion corrected using one of pair-wise, pair-wise with motion model, group-wise and group-wise with motion model registration. Next these motion corrected volumes are registered to the breath hold attenuation map. The PET data are then reconstructed using deformed attenuation maps and motion corrected. Evaluation compares the results of these methods, as well as against a non-motion corrected example, using a visual analysis, a comparison of profiles through a lesion inserted into the data as well as standard uptake values in lesions. Results indicate that the incorporation of a motion model and use of group-wise registration improves contrast and quantification.
+    Introducing motion models into respiratory motion correction methods can lead to a reduction in blurring and artefacts. However, the pool of research where motion modelling methods are applied to PET/CT is relatively shallow. Previous work used NAC TOF data to fit motion models, not only to motion correct the volumes themselves, but also to warp a single attenuation map to the positions of the initial gated data. This work seeks to extend previous work to offer a comparison of respiratory motion correction methods, not only with and without motion models, but also to compare pair-wise and group-wise registration techniques, on simulation data, in a low count scenario, where the attenuation map is from a pseudo-breath hold acquisition. To test the methods, XCAT images are constructed, simulated and reconstructed without attenuation correction, then motion corrected using one of pair-wise, pair-wise with motion model, group-wise and group-wise with motion model registration. Next these motion corrected volumes are registered to the breath hold attenuation map. The PET data are then reconstructed using deformed attenuation maps and motion corrected. Evaluation compares the results of these methods against non-motion corrected and motion free examples. Results indicate that the incorporation of motion models and group-wise registration, improves contrast and quantification.
 \end{abstract}
 
-\vspace{-0.4cm}
+% \vspace{-0.3cm}
 
 \input{body}
 
-\vspace{-0.4cm}
+\vspace{-0.3cm}
 
 \AtNextBibliography{\scriptsize}
 \printbibliography

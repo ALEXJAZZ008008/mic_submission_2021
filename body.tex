@@ -1,68 +1,72 @@
+\vspace{-0.5cm}
+
 \section{Introduction} \label{sec:introduction}
-    \IEEEPARstart{M}{otion} modelling is a \gls{MC} technique where time- or gate-dependence of deformation fields is parametrised in terms of a surrogate signal~\cite{McClelland2013}.  \glss{MM} attempt to improve upon solely registering the data by being more robust to noise but also by allowing for the correction of unseen data. It  has shown good promise in \gls{CT}%~\cite{Li2007EnhancedModel}
+    \IEEEPARstart{M}{otion} modelling is a \gls{MC} technique, where time- or gate-dependence of \glss{DVF} is parametrised in terms of a surrogate signal~\cite{McClelland2013}. \glss{MM} attempt to improve upon solely registering data, being more robust to noise, but also allowing for the correction of unseen data. It has shown good promise in \gls{CT}%~\cite{Li2007EnhancedModel}
     , \gls{MR} %~\cite{Manke2002RespiratoryModels}
-    and  combined \gls{PET}/\gls{MR}~\cite{Manber2016JointCorrection.} but has not yet seen wide spread adoption in clinical \gls{PET} where \gls{PET}/\gls{CT} is far more common.
+    and  combined \gls{PET}/\gls{MR}~\cite{Manber2016JointCorrection.}, but has not yet seen wide spread adoption in clinical \gls{PET}, where \gls{PET}/\gls{CT} is far more common.
     
-    \gls{RM} reduces resolution and degrades the accuracy of quantification in \gls{PET} by introducing blurring to the \gls{PET} volume and also misalignment between the \gls{PET} and \gls{CT}~\cite{Nehmeh2008a}. Most existing \gls{MC} methods rely on pair-wise registration of gated \gls{PET} volumes, this is a challenging problem due to the low contrast and high noise~\cite{Oliveira2014}. \gls{RMC} is an ideal problem area for the application of \glss{MM} as \glss{SS} are already commonly available from respiratory gating, such as acquired by \gls{RPM} or \gls{PCA}~\cite{Thielemans2011}.
+    %\gls{RM} reduces resolution and degrades the accuracy of quantification in \gls{PET} by introducing blurring to the \gls{PET} volume and also misalignment between the \gls{PET} and \gls{CT}~\cite{Nehmeh2008a}. Most existing \gls{MC} methods rely on pair-wise registration of gated \gls{PET} volumes, this is a challenging problem due to the low contrast and high noise~\cite{Oliveira2014}. Respiratory \gls{MC} is an ideal problem area for the application of \glss{MM} as \glss{SS} are already commonly available from respiratory gating, such as acquired by \gls{RPM} or \gls{PCA}~\cite{Thielemans2011}.
     
-    In previous work the possibility of using \glss{MM} to \gls{MC} \gls{NAC} \gls{TOF} \gls{PET} and warp a \gls{Mu-Map} from a position close to the mean respiratory position to each gate data was investigated, it was found that the combination of both the \gls{MM} and \gls{TOF} data was sufficient to perform a \gls{AC} reconstruction with \gls{MC} without introducing artefacts while increasing resolution and quantification accuracy~\cite{Whitehead2019ImpactPET}, ~\cite{Whitehead2020PET/CTFields}. This work seeks to extend the method further through the use of a more modular framework which allows for the fair comparison of different registration methods, both with and without \glss{MM}. Furthermore, this work uses more realistic simulation and count levels compared to our previous work, where traditional registration methods would fail. Additionally, this work strives to improve the \gls{Mu-Map} warping aspect of our previous method by fixing the \gls{Mu-Map} at end inhalation, as opposed to the mean respiratory position, as this is more clinically relevant but also challenging.
+    In previous work, the possibility of using \glss{MM} to \gls{MC} \gls{NAC} \gls{TOF} \gls{PET}, and warp a \gls{Mu-Map} from a position close to the mean respiratory position to each gate, was investigated. It was found, that the combination of both the \gls{MM} and \gls{TOF} was sufficient to perform an \gls{AC} reconstruction with \gls{MC}, without introducing artefacts, while increasing resolution and quantification accuracy~\cite{Whitehead2019ImpactPET},~\cite{Whitehead2020PET/CTFields}. This work seeks to extend the method further through the use of a more modular framework, which allows for the fair comparison of different registration methods, both with and without \glss{MM}. Furthermore, this work uses more realistic simulation and count levels, compared to previous work (where more simple registration methods would fail). Additionally, this work strives to improve the \gls{Mu-Map} warping aspect of previous method, by fixing the \gls{Mu-Map} at end inhalation (as opposed to the mean respiratory position). This is more clinically relevant but also challenging.
+    
+    A method incorporating \glss{MM} for dynamic \gls{PET}/\gls{CT}, was proposed and tested on clinical data in~\cite{Chan2018Non-RigidPET}. The work presented here, differentiates itself by firstly using a \gls{2D} \gls{SS}, rather than a \gls{1D} \gls{SS}, thus both inter- and intra-gate motion can be included in the model, at the expense that each gate contains fewer counts. Additionally, the group-wise method, presented here, makes use of an iterative \gls{MC} algorithm rather than using only a pair-wise method.
 
 \vspace{-0.3cm}
 
 \section{Methods} \label{sec:methods}
     \subsection{XCAT Volume Generation} \label{sec:xcat_volume_generation}
-        \gls{XCAT}~\cite{Segars2010} was used to generate $240$ volumes over a \SI{120}{\second} period using a respiratory trace  derived from \gls{MR} navigator patient data. The max displacement of \gls{AP} and \gls{SI} motion was set to \SI{1.2}{\centi\metre} and \SI{2.0}{\centi\metre} respectively. Activity concentrations were derived from a static \gls{FDG} patient scan. % The \gls{FOV} included the base of the lungs, diaphragm and the top of the liver with a
-        A \SI{20}{\milli\metre} diameter spherical lesion (smaller than the max displacement due to \gls{RM}) was placed into the base of the right lung (within the max displacement due to \gls{RM} to the diaphragm).
+        \gls{XCAT}~\cite{Segars2010} was used to generate $240$ volumes over a \SI{120}{\second} period using a respiratory trace, derived from \gls{MR} navigator patient data. The max displacement of \acrlong{AP} and \acrlong{SI} motion, was set to \SI{1.2}{\centi\metre} and \SI{2.0}{\centi\metre} respectively. Activity concentrations were derived from a static \gls{18F-FDG} patient scan. %The \gls{FOV} included the base of the lungs, diaphragm and the top of the liver with a
+        A \SI{20}{\milli\metre} diameter spherical lesion (smaller than the max displacement, due to \gls{RM}) was placed into the base of the right lung (within the max displacement, due to \gls{RM}, of the diaphragm).
     
     \vspace{-0.3cm}
     
     \subsection{PET Acquisition Simulation and Non-Attenuation Corrected Image Reconstruction} \label{sec:pet_acquisition_simulation_and_non_attenuation_corrected_image_reconstruction}
-        \gls{PET} acquisitions were simulated (and reconstructed) using \gls{STIR}~\cite{Thielemans2012, Nikos2019} through \gls{SIRF}~\cite{Ovtchinnikov2017} to forward project the data using the geometry of a \gls{GE} Discovery $710$ but using a \gls{TOF} resolution of \SI{375}{\pico\second}. % This \gls{TOF} resolution is higher than that of the $710$, but is closer to the newer \gls{GE} Signa \gls{PET}/\gls{MR} system. \gls{TOF} mashing was used to reduce computation time resulting in $13$ \gls{TOF} bins of size \SI{376.5}{\pico\second}.
-        Attenuation was included using the relevant \glss{Mu-Map} generated by \gls{XCAT}.
-        
-        Pseudo-randoms and scatter were added. %Randoms were added by summing the scaled mean value to each voxel of each volume prior to forward projection. Pseudo scatter was added by summing the scaled and smoothed mean \gls{Mu-Map} prior to forward projection, the smoothing parameter was optimised to give scatter which tapered at the same rate as in clinical data
+        \gls{PET} acquisitions were simulated (and reconstructed) using \gls{STIR}~\cite{Thielemans2012, Nikos2019} through \gls{SIRF}~\cite{Ovtchinnikov2017}, to forward project data using the geometry of a \gls{GE} Discovery $710$, but using a \gls{TOF} resolution of \SI{375}{\pico\second}. %This \gls{TOF} resolution is higher than that of the $710$, but is closer to the newer \gls{GE} Signa \gls{PET}/\gls{MR} system. \gls{TOF} mashing was used to reduce computation time resulting in $13$ \gls{TOF} bins of size \SI{376.5}{\pico\second}.
+        Attenuation was included using the relevant \glss{Mu-Map} generated by \gls{XCAT}. Pseudo-randoms and scatter were added. %Randoms were added by summing the scaled mean value to each voxel of each volume prior to forward projection. Pseudo scatter was added by summing the scaled and smoothed mean \gls{Mu-Map} prior to forward projection, the smoothing parameter was optimised to give scatter which tapered at the same rate as in clinical data
         A full scatter simulation was not performed due to software limitations.
         
-        Noise was simulated such that the data matched an acquisition over \SI{120}{\second}, emulating a standard single bed position acquisition. The count rate was selected to match that of research scans, i.e. below that of diagnostic clinical scans. This count rate was selected as a 'worst case scenario'.
+        Noise was simulated, such that data matched an acquisition over \SI{120}{\second}, emulating a standard single bed position acquisition. The count rate was selected to match that of research scans, i.e. below that of diagnostic clinical scans. This count rate was selected as a 'worst case scenario'.
         
-        A respiratory \gls{SS} was generated using \gls{PCA}~\cite{Thielemans2011}. The magnitude of this signal and its gradient was used to gate the data into $30$ respiratory bins (10 amplitude and 3 gradient bins) using displacement gating. For the purpose of the \gls{MM} fitting, \gls{SS} values were determined for the post-gated data by taking an average of the \gls{SS} values of the data in each bin.
+        A respiratory \gls{SS} was generated using \gls{PCA}~\cite{Thielemans2011}. The magnitude of this signal and its gradient, was used to gate data into $30$ respiratory bins using displacement gating ($10$ amplitude and $3$ gradient bins). Gates with fewer than $0.42$\% of the counts were discarded. For the purpose of the \gls{MM} fitting, \gls{SS} values were determined for the post-gated data by taking an average of the \gls{SS} values of data in each bin.
         
-        Data were reconstructed without \gls{AC} using OSEM with two full iterations and $24$ subsets.~\cite{Hudson1994}.
+        Data were reconstructed, without \gls{AC}, using \gls{OSEM} with two full iterations and $24$ subsets.%~\cite{Hudson1994}.
     
     \vspace{-0.3cm}
     
     \subsection{Registration} \label{sec:registration}
-        Before being registered each volume underwent pre-processing, including replication of end-slices, conversion to approximately normally distributed data and post-smoothing. This pre-processing was only applied to intermediate data and was not apparent in the output of the method.% Initially, because a breath hold \gls{Mu-Map} is the final target position for the \gls{MC} $10$ repeating slices are added to the top and bottom of each volume to allow space for the volumes to be registered into. First, the mean value was subtracted from each volume and then each voxel in the volume was divided by the standard deviation of the volume. Next a Yeo-Johnson transformation~\cite{Johnson2013} was applied to transform the data to be more Gaussian like, this acted as a pseudo histogram normalisation. Finally the data underwent Gaussian smoothing.
+        Before being registered, each volume underwent pre-processing. Including, replication of end-slices, transformation to be approximately normally distributed and post-smoothing. This pre-processing was only applied to intermediate data and was not used for the final output of the method.% Initially, because a breath hold \gls{Mu-Map} is the final target position for the \gls{MC} $10$ repeating slices are added to the top and bottom of each volume to allow space for the volumes to be registered into. First, the mean value was subtracted from each volume and then each voxel in the volume was divided by the standard deviation of the volume. Next a Yeo-Johnson transformation~\cite{Johnson2013} was applied to transform data to be more Gaussian like, this acted as a pseudo histogram normalisation. Finally data underwent Gaussian smoothing.
         
-        Two registration methods were examined in this work. Firstly, pair-wise registration, where the reference position was selected as the gate with the highest number of counts and all other gates were registered to it. Secondly, group-wise registration, where after an initial pair-wise registration step the \glss{DVF} generated had the inverse mean of all \glss{DVF} composed with them before a new reference volume was resampled. Registration to the new reference volume followed by the inverse mean composition and resample continued for a set number of iterations. NiftyReg~\cite{Modat2010} was used to perform indirect registrations using a B-spline parameterisation. The \gls{CPG} spacing of the B-spline coefficients, bending energy regularisation term weight and Gaussian smoothing parameters were tuned using a grid search.
+        Two registration methods were examined in this work. Firstly, pair-wise registration, where the reference position was selected as the gate with the highest number of counts. All other gates were registered to it. Secondly, group-wise registration, where after an initial pair-wise registration step, the \glss{DVF} generated had the inverse mean of all \glss{DVF} composed with them, before a new reference volume was resampled. Registration to the new reference volume, followed by the inverse mean composition and resample, continued for a set number of iterations. NiftyReg~\cite{Modat2010} was used to perform registrations using a B-spline parameterisation. The Gaussian smoothing \gls{FWHM}, \acrlong{CPG} spacing of the B-spline coefficients, \acrlong{BE} regularisation term weight and number of iterations were tuned using a grid search.
     
     \vspace{-0.3cm}
     
     \subsection{Motion Model Estimation} \label{sec:motion_model_estimation}
-        If a \gls{MM} was used then it was fit as a direct \gls{RCM} on the \glss{DVF} from~\Fref{sec:registration} and the \gls{SS} from~\Fref{sec:pet_acquisition_simulation_and_non_attenuation_corrected_image_reconstruction}. A weighted \gls{LR} was used where the weighting was taken based on the number of counts in each gate. Once a \gls{MM} was fit, new \glss{DVF} were generated for each gate using the \gls{SS} values used to fit the \gls{MM}. For group-wise registration \gls{MM} fitting occurred between iterations.
+        If a \gls{MM} was used, then it was fit as a direct \acrlong{RCM} on the \glss{DVF} from~\Fref{sec:registration} and the \gls{SS} from~\Fref{sec:pet_acquisition_simulation_and_non_attenuation_corrected_image_reconstruction}. A weighted \acrlong{LR} was used, where the weighting was taken based on the number of counts in each gate. Once a \gls{MM} was fit, new \glss{DVF} were generated for each gate, using the \gls{SS} values used to fit the \gls{MM}. For group-wise registration, \gls{MM} fitting occurred between iterations, the \glss{DVF} generated by the \gls{MM} were used to resample the new target volume at each iteration.
     
     \vspace{-0.3cm}
     
     \subsection{Attenuation Map Warping} \label{sec:attenuation_map_warping}
-        A \gls{Mu-Map} at end inhalation was selected from the \glss{Mu-Map} generated by \gls{XCAT}. The \gls{PET} volume from the previous step was then registered to this \gls{Mu-Map} and the resulting \glss{DVF} were composed with the \glss{DVF} from the last iteration of the \gls{MC} method and a new volume resampled. The inverse of these \glss{DVF} were then used to warp the \gls{Mu-Map} to each gate.
+        A \gls{Mu-Map} at end inhalation was selected from the \glss{Mu-Map} generated by \gls{XCAT}. The \gls{PET} volume from the previous step was then registered to this \gls{Mu-Map}, and the resulting \glss{DVF} were composed with the \glss{DVF} from the last iteration of the \gls{MC} method, and a new volume resampled. The inverse of these \glss{DVF}, were then used to warp the \gls{Mu-Map} to each gate.
     
     \vspace{-0.3cm}
     
     \subsection{Motion Corrected Image Reconstruction with AC} \label{sec:attenuation_corrected_image_reconstruction}
-        Data was re-reconstructed, with \gls{AC}, using the \glss{Mu-Map} from~\Fref{sec:attenuation_map_warping}. The same reconstruction parameters as in~\Fref{sec:attenuation_corrected_image_reconstruction} were used. \gls{MC} was then applied to this data following the same steps as above. Volumes were post-filtered using a Gaussian blur with a kernel size of \SI{6.39}{\milli\metre} \gls{FWHM} in the transverse plane and \SI{3.27}{\milli\metre} \gls{FWHM} in the axial direction.
+        Data were re-reconstructed with \gls{AC}, using the \glss{Mu-Map} from~\Fref{sec:attenuation_map_warping}. The same reconstruction parameters as in~\Fref{sec:attenuation_corrected_image_reconstruction} were used. \gls{MC} was then applied to data following~\Fref{sec:registration},~\Fref{sec:motion_model_estimation} and~\Fref{sec:attenuation_map_warping}. Volumes were post-filtered using a Gaussian smoothing, with a \gls{FWHM} of \SI{6.39}{\milli\metre} in the transverse plane %(equivalent to three voxels)
+        and \SI{3.27}{\milli\metre} %(equivalent to one voxel)
+        in the axial direction.
     
     \vspace{-0.3cm}
     
     \subsection{Evaluation} \label{sec:evaluation}
-        In addition to the reconstructions performed in~\Fref{sec:attenuation_corrected_image_reconstruction} data was also reconstructed without \gls{MC} using either a sum of all \glss{Mu-Map} (to emulate an average CINE-CT) or the end inhilation \gls{Mu-Map}. For the sake of evaluation these volumes were registered to the position of the end inhalation \gls{Mu-Map}.
+        In addition to the reconstructions performed in~\Fref{sec:attenuation_corrected_image_reconstruction}, data were also reconstructed without \gls{MC}, using either a sum of all \glss{Mu-Map} (to emulate an \gls{AV-CCT}), or the end inhalation \gls{Mu-Map}. For the present evaluation, the volumes without \gls{MC} were registered to the position of the end inhalation \gls{Mu-Map}. Additionally, \glss{DVF} generated by each method were also applied to noiseless data for visual analysis.
         
-        Comparisons used included: A profile over the lesion and \gls{SUV}\textsubscript{max} and \gls{SUV}\textsubscript{peak}.% (defined following \gls{EANM} guidelines~\cite{Boellaard2015FDG2.0}).
+        %Comparisons used included: A profile over the lesion, \gls{SUV}\textsubscript{max} and \gls{SUV}\textsubscript{peak} (defined following \gls{EANM} guidelines~\cite{Boellaard2015FDG2.0}).
 
 \vspace{-0.3cm}
 
 \section{Results} \label{sec:results}
     \begin{figure}
-        \vspace{-0.3cm}
+        \vspace{-0.0cm}
         
         \centering
         
@@ -71,7 +75,7 @@
         \vspace{-0.3cm}
         
         \captionsetup{singlelinecheck=false, justification=centering}
-        \caption{Reconstructions using; ungated (static \gls{CT}), ungated (CINE-\gls{CT}), pair-wise, pair-wise \gls{MM}, group-wise, group-wise \gls{MM}. Colour map ranges are consistent for all images.}
+        \caption{First column contains \gls{AC} \gls{MC} reconstructions and the second column contains the result of applying the final  \gls{MC} on the original XCAT images (for easier assessment of the accuracy of the estimated \glss{DVF}); ungated static \gls{CT}, ungated \gls{AV-CCT}, pair-wise, pair-wise \gls{MM}, group-wise, group-wise \gls{MM}. Colour map ranges are consistent for all images in each column.}
         
         \label{fig:visual_analysis}
         
@@ -79,7 +83,7 @@
     \end{figure}
     
     \begin{figure}
-        \vspace{-0.3cm}
+        \vspace{-0.0cm}
         
         \centering
         
@@ -88,45 +92,55 @@
         \vspace{-0.3cm}
         
         \captionsetup{singlelinecheck=false, justification=centering}
-        \caption{A profile across the lesion for; ungated (static \gls{CT}), ungated (CINE-\gls{CT}), pair-wise, pair-wise \gls{MM}, group-wise, group-wise \gls{MM}.}
+        \caption{A profile across the lesion for; ungated static \gls{CT}, ungated \gls{AV-CCT}, pair-wise, pair-wise \gls{MM}, group-wise, group-wise \gls{MM}.}
         
         \label{fig:profile}
         
-        \vspace{-0.3cm}
+        \vspace{-0.5cm}
     \end{figure}
     
     \begin{table}
         \centering
         
         \captionsetup{singlelinecheck=false, justification=centering}
-        \caption{Comparison of \gls{SUV}\textsubscript{max} and \gls{SUV}\textsubscript{peak} between; ungated (static \gls{CT}), ungated (CINE-\gls{CT}), pair-wise, pair-wise \gls{MM}, group-wise, group-wise \gls{MM}.}
+        \caption{Comparison of \gls{SUV}\textsubscript{max} and \gls{SUV}\textsubscript{peak} between: ungated static \gls{CT}, ungated \gls{AV-CCT}, pair-wise, pair-wise \gls{MM}, group-wise, group-wise \gls{MM}.}
         
-        \resizebox*{0.8\linewidth}{!}
+        \resizebox*{0.6\linewidth}{!}
         {
             \begin{tabular}{||c|cc||}
                 \hline
-                \textbf{\gls{SUV}}              & \textbf{Max}  & \textbf{Peak} \\
+                \textbf{\gls{SUV}}                  & \textbf{Max}  & \textbf{Peak} \\
                 \hline
-                \textbf{Pair-wise}              & $4.35$        & $3.93$ \\
-                \textbf{Pair-wise \gls{MM}}     & $6.59$        & $5.78$ \\
-                \textbf{Group-wise}             & $6.27$        & $5.31$ \\
-                \textbf{Group-wise \gls{MM}}    & $6.84$        & $6.40$ \\
+                \textbf{No Motion}                  & $9.50$        & $9.06$ \\
+                \hline
+                \textbf{Ungated Static \gls{CT}}    & $5.25$        & $5.15$ \\
+                \textbf{Ungated \gls{AV-CCT}}       & $5.38$        & $5.07$ \\
+                \hline
+                \textbf{Pair-wise}                  & $4.21$        & $3.92$ \\
+                \textbf{Pair-wise \gls{MM}}         & $6.63$        & $6.07$ \\
+                \hline
+                \textbf{Group-wise}                 & $4.42$        & $4.21$ \\
+                \textbf{Group-wise \gls{MM}}        & $7.64$        & $7.03$ \\
                 \hline
             \end{tabular}
         }
         
         \label{tab:suv}
         
-        \vspace{-0.3cm}
+        \vspace{-0.5cm}
     \end{table}
     
-     Visual comparison of the reconstructed images, see ~\Fref{fig:visual_analysis} shows that more blurring can be seen at the boundary between the diaphragm and lung when  a \gls{MM} was not used, additionally where a \gls{MM} was used the lesion appears to be more homogeneous. The peak of the profile is greater for both group-wise methods than for both pair-wise methods and each \gls{MM} example is greater than when \gls{MM} isn't used~\Fref{fig:profile}. \gls{SUV} results consistently show that including a \glss{MM} significantly increases the \gls{SUV} when compared to when one is not used~\Fref{tab:suv}.
+    A visual comparison of the reconstructed images (see ~\Fref{fig:visual_analysis}), shows that more blurring can be seen at the boundary between the diaphragm and lung for the \gls{MM}-free methods. Additionally, where a \gls{MM} was used, the lesion appears to be more homogeneous.
+     
+    The peak of the profile ((see~\Fref{fig:profile})), is greater for \gls{MM} methods than for \gls{MM}-free methods. However, the peak for all \gls{MC} methods are greater than ungated methods.
+     
+    \gls{SUV} results consistently show that including \glss{MM} increases the \gls{SUV} when compared to when one is not used (see~\Fref{tab:suv}).
 
 \vspace{-0.3cm}
 
 \section{Discussion and Conclusions} \label{sec:discussion_and_conclusions}
-    Results from a visual analysis, a comparison of profiles and \glss{SUV} show that adding a \gls{MM} to any \gls{MC} method, tested here, improved the quality of volumes produced. Furthermore, the same evaluation showed that group-wise registration improved results, but to a lesser degree than the impact of adding \glss{MM}.
+    Results from a visual analysis, a comparison of profiles and \gls{SUV}, show that adding a \gls{MM} to any \gls{MC} method (tested here) improved the quality of volumes produced. Although, from a visual analysis volumes appear preferable with any \gls{MC} method, quantitative evaluation points to the conclusion that for \gls{MC} to be successful, for very noisy data, \glss{MM} are almost required.
     
-    In the future, work will focus on incorporating the methods presented here into an iterative \gls{IR} and \gls{MC} method and tested on patient data from several research studies.
-    % It may also be of interest to consider the impact that robust regression methods have on fitting a \gls{MM}, such as using a robust objective function or fitting the \gls{MM} indirectly on the eigenvectors of applying \gls{PCA} to the initial \glss{DVF}.
+    In the future, work will focus on incorporating the methods presented here into an iterative \acrlong{IR} and \gls{MC} method and tested on patient data from several research studies.
+    %It may also be of interest to consider the impact that robust regression methods have on fitting a \gls{MM}, such as using a robust objective function or fitting the \gls{MM} indirectly on the eigenvectors of applying \gls{PCA} to the initial \glss{DVF}.
     
