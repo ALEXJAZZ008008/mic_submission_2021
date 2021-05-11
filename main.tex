@@ -91,24 +91,26 @@
         
     % \vspace{-1.0cm}
     
-    \thanks{
+    % \thanks{
             % \vspace{-0.5cm}
             
             \IEEEauthorblockA{
                 \IEEEauthorrefmark{1}
                 \textit{Institute of Nuclear Medicine, University College London, UK}
             }
-    }
-    \thanks{\IEEEauthorblockA{
+    % }
+    % \thanks{
+            \IEEEauthorblockA{
                 \IEEEauthorrefmark{2}
                 \textit{Centre for Medical Image Computing, University College London, UK}
             }
-    }
-    \thanks{\IEEEauthorblockA{
+    % }
+    % \thanks{
+            \IEEEauthorblockA{
                 \IEEEauthorrefmark{3}
                 \textit{Molecular Imaging and Computed Tomography Engineering, GE Healthcare, USA}
             }
-    }
+    % }
 
     \thanks{This research is supported by GE Healthcare, the NIHR UCLH Biomedical Research Centre and the UCL EPSRC Centre for Doctoral Training in Intelligent, Integrated Imaging in Healthcare (i4health) grant (EP/L016478/1).}
     \thanks{The software used was partly produced by the Computational Collaborative Project on Synergistic Biomedical Imaging, CCP SyneRBI, UK EPSRC grant (EP/T026693/1).}
@@ -129,7 +131,10 @@
 
 % \vspace{-0.3cm}
 
-\AtNextBibliography{\scriptsize}
+\AtNextBibliography{
+                    % \scriptsize
+                    \small
+                    }
 \printbibliography
 
 \end{document}
