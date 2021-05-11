@@ -2,25 +2,25 @@
 \IEEEoverridecommandlockouts
 
 \usepackage[activate={true, nocompatibility}, final, tracking=true, kerning=true, spacing=true, factor=1100, stretch=10, shrink=10]{microtype}
-\linespread{0.9}
+% \linespread{0.9}
 
 \makeatletter
 \def\ps@IEEEtitlepagestyle{
   \def\@evenfoot{}
 }
 
-% \def\ps@IEEEtitlepagestyle{
-%   \def\@oddfoot{\mycopyrightnotice}
-%   \def\@evenfoot{}
-% }
-% \def\mycopyrightnotice{
-%   {\footnotesize
-%   \begin{minipage}{\textwidth}
-%   \centering
-%   978-1-7281-7693-2/20/\$31.00 \copyright2020 IEEE
-%   \end{minipage}
-%   }
-% }
+\def\ps@IEEEtitlepagestyle{
+  \def\@oddfoot{\mycopyrightnotice}
+  \def\@evenfoot{}
+}
+\def\mycopyrightnotice{
+  {\footnotesize
+  \begin{minipage}{\textwidth}
+  \centering
+  978-1-7281-7693-2/20/\$31.00 \copyright2020 IEEE
+  \end{minipage}
+  }
+}
 
 \ifCLASSINFOpdf
    \usepackage[pdftex]{graphicx}
@@ -52,22 +52,22 @@
 \usepackage[style=ieee, doi=false, isbn=false, url=false, maxbibnames=1, minbibnames=1, maxcitenames=1, mincitenames=1, backend=biber, defernumbers=false]{biblatex}
 \addbibresource{./bibtex/bib/Biblio.bib}
 
-\AtEveryBibitem{\clearfield{month}}
-\AtEveryBibitem{\clearfield{day}}
-\AtEveryBibitem{\clearfield{volume}}
-\AtEveryBibitem{\clearfield{issue}}
-\AtEveryBibitem{\clearfield{pages}}
-\AtEveryBibitem{\clearfield{number}}
-\AtEveryBibitem{\clearfield{title}}
-\AtEveryBibitem{\clearfield{isbn}}
-\AtEveryBibitem{\clearfield{keywords}}
-\AtEveryBibitem{\clearfield{issn}}
-\AtEveryBibitem{\clearfield{journal}}
+% \AtEveryBibitem{\clearfield{month}}
+% \AtEveryBibitem{\clearfield{day}}
+% \AtEveryBibitem{\clearfield{volume}}
+% \AtEveryBibitem{\clearfield{issue}}
+% \AtEveryBibitem{\clearfield{pages}}
+% \AtEveryBibitem{\clearfield{number}}
+% \AtEveryBibitem{\clearfield{title}}
+% \AtEveryBibitem{\clearfield{isbn}}
+% \AtEveryBibitem{\clearfield{keywords}}
+% \AtEveryBibitem{\clearfield{issn}}
+% \AtEveryBibitem{\clearfield{journal}}
 
 \begin{document}
 
 \title{
-    \vspace{-0.5cm}
+    % \vspace{-0.5cm}
 
     Comparison of Motion Correction Methods Incorporating Motion Modelling for PET/CT Using a Single Breath Hold Attenuation Map
 }
@@ -76,7 +76,7 @@
 \pagenumbering{gobble}
 
 \author{
-    \vspace{-0.3cm}
+    % \vspace{-0.3cm}
     
     \IEEEauthorblockN{
         Alexander~C.~Whitehead~\IEEEauthorrefmark{1}~\IEEEauthorrefmark{2},
@@ -89,10 +89,10 @@
         Kris~Thielemans~\IEEEauthorrefmark{1}~\IEEEauthorrefmark{2}
     }
         
-    \vspace{-1.0cm}
+    % \vspace{-1.0cm}
     
     \thanks{
-            \vspace{-0.5cm}
+            % \vspace{-0.5cm}
             
             \IEEEauthorblockA{
                 \IEEEauthorrefmark{1}
@@ -110,10 +110,9 @@
             }
     }
 
-    \thanks{This research is supported by GE Healthcare%, the NIHR UCLH Biomedical Research Centre and the UCL EPSRC Centre for Doctoral Training in Intelligent, Integrated Imaging in Healthcare (i4health) grant (EP/L016478/1).
-    }
-    %\thanks{The software used was partly produced by the Computational Collaborative Project on Synergistic Biomedical Imaging, CCP SyneRBI, UK EPSRC grant (EP/T026693/1).}
-    %\thanks{Jamie~R.~McClelland is supported by a Cancer Research UK Centres Network Accelerator Award grant (A21993) to the ART-NET consortium and a CRUK Multi-disciplinary grant (CRC 521).}
+    \thanks{This research is supported by GE Healthcare, the NIHR UCLH Biomedical Research Centre and the UCL EPSRC Centre for Doctoral Training in Intelligent, Integrated Imaging in Healthcare (i4health) grant (EP/L016478/1).}
+    \thanks{The software used was partly produced by the Computational Collaborative Project on Synergistic Biomedical Imaging, CCP SyneRBI, UK EPSRC grant (EP/T026693/1).}
+    \thanks{Jamie~R.~McClelland is supported by a Cancer Research UK Centres Network Accelerator Award grant (A21993) to the ART-NET consortium and a CRUK Multi-disciplinary grant (CRC 521).}
     \thanks{(contact: \texttt{alexander.whitehead.18@ucl.ac.uk}).}
 }
 
@@ -128,7 +127,7 @@
 
 \input{body}
 
-\vspace{-0.3cm}
+% \vspace{-0.3cm}
 
 \AtNextBibliography{\scriptsize}
 \printbibliography
